@@ -1,0 +1,16 @@
+.card {
+    background: var(--background-secondary);
+    width: 95%;
+    margin: auto;
+    max-width: 500px;
+    padding: 50px 80px;
+    border-radius: 16px;
+    box-shadow: rgba(58, 58, 65, 0.2) 0px 7px 29px 0px;
+   
+}
+@media  (max-width : 500px) {
+    .card {
+    padding: 40px 20px;
+
+    }
+}
