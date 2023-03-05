@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import url('./popup.css');
 :root {
     --background-primary : #121212 ;
     --background-secondary : #1D1D1D;
@@ -33,13 +33,30 @@ body {
 .page-height{
     height: calc(100vh - var(--nav-height));
 }
+.normalInputField{
+    background-color: var(--background-input);
+    padding: 10px 20px;
+    margin: 30px 0;
+    border-radius: 10px;
+    border: none;
+    outline:none;
+    width: 100%;
+    text-align: center
+}
 
+.normalInputField::-webkit-outer-spin-button,
+.normalInputField::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 @layer components {
     .center-me {
       @apply flex items-center justify-center;
     }
     .btn-primary {
         @apply bg-my-blue py-2 px-5 rounded-3xl;
+        min-width: 130px;
+        display: block;
     }
     .normal-text {
         @apply text-my-text-secondary leading-8 my-4;

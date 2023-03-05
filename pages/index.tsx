@@ -4,10 +4,12 @@ import { Nunito } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 import Card from "../Components/Card/Card";
 import Link from "next/link";
+import { useGuestGuard } from "@/Hooks/UseGuestGuard";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
 export default function Home() {
+  useGuestGuard();
   return (
     <>
       <Head>
@@ -44,7 +46,7 @@ export default function Home() {
                 we wrap up the finishing youches, we’re adding people gradually
                 to make sure nothing breaks :)
               </p>
-             <Link href={'/register'}> <button className="btn-primary">Get Your Username</button></Link>
+             <Link href={'/authenticate'}> <button className="btn-primary">Get Your Username</button></Link>
               <div className="text-my-blue center-me gap-2 mt-5">
                 <span>Have an invite text?</span>
                 <Link href="#" className="font-bold">
