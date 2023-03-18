@@ -3,10 +3,13 @@ import Image from "next/image";
 import React, { useState } from "react";
 import Card from "../../Card/Card";
 import validator from "validator";
-import { useSendOtpMutation } from "@/apis/otpApi";
+import { useSendOtpMutation, useSignInMutation } from "@/apis/authApi";
 
 import StepOtp from "../StepOtp/StepOtp";
 import { useLoader } from "@/Hooks/useLoader";
+import useSignIn from "@/Hooks/useSignIn";
+import { setUser } from "@/Slices/auth";
+import { useDispatch } from "react-redux";
 interface PROPS {
   goNext: () => void;
 }
@@ -15,26 +18,36 @@ const StepPassword = ({ goNext }: PROPS) => {
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<null | string>("");
   const [sendOtp, state]: any = useSendOtpMutation();
-  useLoader(state, { loading: "Sending Otp", success: "Sent" }, onSuccess);
+  const [signIn, signInState]: any = useSignInMutation();
+  
+  useLoader(state, { loading: "Sending Otp", success: "Sent" }, onSuccessOtp);
+  useSignIn(signInState, onSuccessSignIn, onErrorSignIn);
   const [openOtp, setOpenOtp] = useState<boolean>(false);
-
+const dispatch = useDispatch();
   function handleSubmission() {
     if (validator.isLength(password, {
       min: 8 , max: 50 
     })) {
       setError(null);
 
-      sendOtp({ email , password });
-      setOpenOtp(true);
+      signIn({ email , password });
     } else {
       setError("Password should atleast 8 characters long");
     }
   }
-  function onSuccess() {
+  function onSuccessOtp() {
     let {
       data: { data : {otpToken} },
     } = state;
     localStorage.setItem('otpToken', otpToken);
+    setOpenOtp(true);
+  } 
+   function onSuccessSignIn() {
+dispatch(setUser(signInState.data.data.user));
+  } 
+   function onErrorSignIn() {
+    sendOtp({ email , password });
+   
   }
   return (
     <section className="page-height grid place-items-center">

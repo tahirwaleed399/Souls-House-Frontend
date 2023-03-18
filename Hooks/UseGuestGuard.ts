@@ -1,28 +1,25 @@
 import { useCallback, useEffect, useMemo } from "react";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleLoader } from "@/Slices/loader";
+import { getUser } from "@/Slices/auth";
+import { User } from "@/Interfaces/User";
 
 export function useGuestGuard() {
   const router = useRouter();
   const dispatch = useDispatch();
-  let isAuth = false;
-  let user = useMemo(
-    () => ({
-      activated: false,
-    }),
-    []
-  );
+  const user : User | null = useSelector(getUser);
+
   const setLoaderTrue = useCallback(()=>dispatch(toggleLoader(true)),[dispatch])
   const setLoaderFalse = useCallback(()=>dispatch(toggleLoader(false)),[dispatch])
   useEffect(() => {
   
-    if(isAuth && !user.activated){
+    if(user && !user.activated){
       setLoaderTrue()
 
         router.push("/activate");
     }
-    if(isAuth && user.activated){
+    if(user && user.activated){
       setLoaderTrue()
 
         router.push("/rooms");
@@ -37,5 +34,5 @@ export function useGuestGuard() {
                      router.events.off('routeChangeComplete', setLoaderFalse);
         }
 
-  }, [isAuth, user, router,dispatch,setLoaderFalse,setLoaderTrue]);
+  }, [user, router,dispatch,setLoaderFalse,setLoaderTrue]);
 }

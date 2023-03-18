@@ -5,9 +5,13 @@ import React, { useState } from 'react';
 import dynamic from "next/dynamic";
 const Popup = dynamic(import('reactjs-popup'), { ssr: false })
 import "reactjs-popup/dist/index.css";
-import { useVerifyOtpMutation } from '@/apis/otpApi';
+import { useVerifyOtpMutation } from '@/apis/authApi';
 import { useLoader } from '@/Hooks/useLoader';
 import { toast } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
+import { setUser } from '@/Slices/auth';
+import { User } from '@/Interfaces/User';
+import { useDispatch } from 'react-redux';
 interface PROPS  {
   open: boolean;
   setOpen: any;
@@ -24,7 +28,16 @@ const StepOtp = ({
 
 const [otp, setOtp] =  useState<number>();
   const [verifyOtp , state]= useVerifyOtpMutation();
-  useLoader(state , {loading:"Verifying Please Wait 😊" , success : "Otp Verified"})
+  const router = useRouter();
+  const dispatch = useDispatch();
+  useLoader(state , {loading:"Verifying Please Wait 😊" , success : "Otp Verified and Account Created"}, 
+  
+  ()=>{
+const user : User = state.data.data.user ;
+dispatch(setUser(user));
+
+  }
+  )
  const handleSubmit = ()=>{
 if(otp) {
   if(otp > 1000 ){

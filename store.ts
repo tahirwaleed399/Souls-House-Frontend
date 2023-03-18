@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { otpApi } from './apis/otpApi';
+import { authApi } from './apis/authApi';
 import loaderReducer from './Slices/loader';
+import authReducer from './Slices/auth';
 export const store = configureStore({
   reducer: {
+    auth : authReducer,
     loader : loaderReducer,
-    [otpApi.reducerPath]: otpApi.reducer,
+    [authApi.reducerPath]: authApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-  getDefaultMiddleware().concat(otpApi.middleware),
+  getDefaultMiddleware().concat(authApi.middleware),
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

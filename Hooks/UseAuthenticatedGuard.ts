@@ -1,31 +1,34 @@
 import { useCallback, useEffect, useMemo } from "react";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleLoader } from "@/Slices/loader";
+import { getUser } from "@/Slices/auth";
+import { User } from "@/Interfaces/User";
 
 export function useAuthenticatedGuard() {
   const router = useRouter();
   const dispatch = useDispatch();
-  let isAuth = true;
-  let user = useMemo(
-    () => ({
-      activated: false,
-    }),
-    []
-  );
+  const user: User | null  = useSelector(getUser);
+
   const setLoaderTrue = useCallback(()=>dispatch(toggleLoader(true)),[dispatch])
   const setLoaderFalse = useCallback(()=>dispatch(toggleLoader(false)),[dispatch])
   useEffect(() => {
-   if(!isAuth ){
-    dispatch(toggleLoader(true));
+ 
+    
 
-      router.push("/");
-  } 
-    if(isAuth && user.activated){
-    dispatch(toggleLoader(true));
-
-        router.push("/activate");
-    }
+      if(!user ){
+        dispatch(toggleLoader(true));
+    
+          router.push("/");
+      } 
+        if(user && user.activated){
+          console.log('I am running because user is present and acivated')
+        dispatch(toggleLoader(true));
+    
+            router.push("/rooms");
+        }
+ 
+   
     
         
     
@@ -37,5 +40,5 @@ export function useAuthenticatedGuard() {
                      router.events.off('routeChangeComplete', setLoaderFalse);
         }
 
-  }, [isAuth, user, router,dispatch,setLoaderFalse,setLoaderTrue]);
+  }, [ user, router,dispatch,setLoaderFalse,setLoaderTrue]);
 }

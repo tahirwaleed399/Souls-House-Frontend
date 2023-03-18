@@ -28,8 +28,7 @@ export const useLoader = (
       if (successCallBack) {
         successCallBack();
       }
-      // dispatch(getUser() as any);
-      // dispatch(isAuthenticatedUser() as any);
+     
     }
   }, [state, dispatch, loading, success , successCallBack , errorCallback]);
 };

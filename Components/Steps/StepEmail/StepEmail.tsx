@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import Card from "../../Card/Card";
 import validator from "validator";
-import { useSendOtpMutation } from "@/apis/otpApi";
+import { useSendOtpMutation } from "@/apis/authApi";
 
 import StepOtp from "../StepOtp/StepOtp";
 import { useLoader } from "@/Hooks/useLoader";
