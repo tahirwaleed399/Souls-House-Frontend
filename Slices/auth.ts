@@ -1,5 +1,8 @@
 import { User } from '@/Interfaces/User';
-import { createSlice } from '@reduxjs/toolkit'
+import api from '@/apis/axiosApi';
+import { backendUrl } from '@/utils/backendUrl';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import axios from 'axios';
 
 const initialState: {
     user : User | null
@@ -11,7 +14,7 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setUser : (state :any | null,{payload}: {payload : User}) => {
+    setUser : (state :any | null,{payload}: {payload : User | null}) => {
         
 
       if(!isEqual(state.user , payload)){
@@ -22,6 +25,16 @@ export const authSlice = createSlice({
        }
   },
 });
+
+export const refreshTokens = createAsyncThunk<any, void>(
+  'auth/refreshTokens',
+  async (_, {dispatch}) => {
+    const response = await api.get('/refresh-tokens');
+    dispatch(setUser(response.data.data.user))
+// setTimeout(()=>dispatch(setUser(response.data.data.user)) , 1000)
+
+  }
+);
 
 export const isEqual = (...objects :Array<any>) => objects.every(obj => JSON.stringify(obj) === JSON.stringify(objects[0]));
 export const { setUser } = authSlice.actions;

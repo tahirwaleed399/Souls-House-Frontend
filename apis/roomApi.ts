@@ -5,7 +5,6 @@ import type {
   FetchArgs,
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query";
-import { Mutex } from "async-mutex";
 // Define a service using a base URL and expected endpoints
 
 const baseQuery = fetchBaseQuery({
@@ -30,62 +29,30 @@ const baseQueryWithReauth: BaseQueryFn<
   }
   return result;
 };
-export const authApi: any = createApi({
-  reducerPath: "authApi",
+export const roomApi: any = createApi({
+  reducerPath: "roomApi",
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
-    sendOtp: builder.mutation({
+    createRoom: builder.mutation({
       query: (data) => ({
-        url: `/send-otp`,
+        url: `/create-room`,
         method: "POST",
         body: data,
+      }),
+    }),  getRooms: builder.query({
+      query: () => ({
+        url: `/get-rooms`,
+        method: "GET"
       }),
     }),
 
-    signIn: builder.mutation({
-      query: (data) => ({
-        url: `/sign-in`,
-        method: "POST",
-        body: data,
-      }),
-    }),
-
-    verifyOtp: builder.mutation({
-      query: (data) => ({
-        url: `/verify-otp`,
-        method: "POST",
-        body: data,
-      }),
-    }),
-    activateUser: builder.mutation({
-      query: (data) => ({
-        url: `/activate-user`,
-        method: "POST",
-        body: data,
-      }),
-    }),
-    refreshTokens: builder.query({
-      query: () => ({
-        url: `/refresh-tokens`,
-        method: "GET",
-      }),
-    }),
-    logout: builder.mutation({
-      query: () => ({
-        url: `/logout`,
-        method: "POST",
-      }),
-    }),
+   
   }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
-  useSendOtpMutation,
-  useVerifyOtpMutation,
-  useActivateUserMutation,
-  useRefreshTokensQuery,
-  useSignInMutation,
-  useLogoutMutation,
-} = authApi;
+useCreateRoomMutation,
+useGetRoomsQuery
+} = roomApi;

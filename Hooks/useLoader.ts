@@ -8,7 +8,9 @@ export const useLoader = (
   errorCallback?: ()=>void,
 ) => {
   const dispatch = useDispatch();
+  
   useEffect(() => {
+  
     toast.dismiss();
     if (state.isLoading) {
       toast.loading(loading);
@@ -24,6 +26,7 @@ export const useLoader = (
       }
     }
     if (state.isSuccess) {
+     
       toast.success(success);
       if (successCallBack) {
         successCallBack();

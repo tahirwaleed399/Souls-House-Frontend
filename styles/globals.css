@@ -1,6 +1,5 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
 @import url('./popup.css');
 :root {
     --background-primary : #121212 ;
@@ -9,14 +8,12 @@
     --background-card : #323232;
     --primary-text : #ffffff;
     --secondary-text : #C4C5C5
-    --blue : #0077FF;
     --indigo : #5453E0;
     --green : #20BD5F;
     --red : #F44336;
     --pink : #E91E63;
+    --blue : #0077FF;
     --nav-height: 81px;
-    
-
 }
 *{
 padding: 0;
@@ -29,6 +26,7 @@ body {
     color: var(--primary-text);
     height: 100vh;
     width: 100vw;
+overflow-x: hidden;
 }
 .page-height{
     height: calc(100vh - var(--nav-height));
@@ -40,7 +38,7 @@ body {
     border-radius: 10px;
     border: none;
     outline:none;
-    width: 100%;
+    /* width: 100%; */
     text-align: center
 }
 
@@ -49,16 +47,52 @@ body {
   -webkit-appearance: none;
   margin: 0;
 }
+:is(.activate , .authenticate ) .normalInputField{
+    width: 100%;
+}
 @layer components {
     .center-me {
       @apply flex items-center justify-center;
     }
+   
     .btn-primary {
-        @apply bg-my-blue py-2 px-5 rounded-3xl;
+        @apply bg-my-blue py-2 px-5 rounded-3xl outline-none;
         min-width: 130px;
         display: block;
+    }
+    .btn-secondary {
+@apply bg-none border-my-blue border-2 py-2 px-5 rounded-3xl outline-none;
+    } 
+    .btn-success {
+@apply bg-my-green py-2 px-5 rounded-3xl outline-none;
+    }
+    .btn-sm {
+        min-width: 80px;
+        font-size: 12px;
+      padding: 8px 10px;
     }
     .normal-text {
         @apply text-my-text-secondary leading-8 my-4;
     }
   }
+.line-after {
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+
+}
+.line-after::after{
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 80%;
+    height: 3px;
+    background-color: var(--blue);
+    transition: 500ms ease-in-out;
+    
+}
+.line-after:hover::after{
+    width: 10%;
+}
+@tailwind utilities;

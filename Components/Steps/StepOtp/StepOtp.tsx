@@ -1,10 +1,10 @@
 import Card from '@/Components/Card/Card'
 import Input from '@/Components/Input/Input'
 import Image from 'next/image'
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import dynamic from "next/dynamic";
 const Popup = dynamic(import('reactjs-popup'), { ssr: false })
-import "reactjs-popup/dist/index.css";
+
 import { useVerifyOtpMutation } from '@/apis/authApi';
 import { useLoader } from '@/Hooks/useLoader';
 import { toast } from 'react-hot-toast';
@@ -30,13 +30,15 @@ const [otp, setOtp] =  useState<number>();
   const [verifyOtp , state]= useVerifyOtpMutation();
   const router = useRouter();
   const dispatch = useDispatch();
+  const onSuccess = useCallback(()=>{
+    
+    const user : User = state.data.data.user ;
+    dispatch(setUser(user));
+    
+      },[state]);
   useLoader(state , {loading:"Verifying Please Wait 😊" , success : "Otp Verified and Account Created"}, 
   
-  ()=>{
-const user : User = state.data.data.user ;
-dispatch(setUser(user));
-
-  }
+  onSuccess
   )
  const handleSubmit = ()=>{
 if(otp) {

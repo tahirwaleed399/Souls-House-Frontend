@@ -27,8 +27,7 @@ export function useActivatedGuard() {
     }
     if(user && !user.activated){
     setLoaderTrue();
-    console.log('gonna run thsi');
-    
+
 
       router.push("/activate");
     }
