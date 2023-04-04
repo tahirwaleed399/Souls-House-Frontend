@@ -7,7 +7,7 @@ const Loader = () => {
 
   return (
     showLoader && (
-      <div className="fixed top-0 left-0 h-full w-full bg-black flex flex-col justify-center items-center text-center gap-2 select-none ">
+      <div className="fixed top-0 left-0 h-full w-full bg-black flex flex-col justify-center items-center text-center gap-2 select-none z-50">
         <Image
           height={64}
           width={64}

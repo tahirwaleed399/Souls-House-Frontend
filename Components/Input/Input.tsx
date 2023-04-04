@@ -4,7 +4,7 @@ interface IPROPS extends InputHTMLAttributes<HTMLInputElement>{
 }
 const Input = (props:IPROPS) => {
   return (
-    <input className='normalInputField' {...props} />
+    <input {...props}  className={'normalInputField'+ ' ' + props.className} />
   )
 }
 

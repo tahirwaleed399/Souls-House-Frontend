@@ -23,7 +23,8 @@ const Authenticate = () => {
   }
 
   return (
-    <div>
+    <div className="authenticate">
+      
       <Step goNext={goNext} />
     </div>
   );

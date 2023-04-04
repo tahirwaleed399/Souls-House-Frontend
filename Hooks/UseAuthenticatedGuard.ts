@@ -22,7 +22,7 @@ export function useAuthenticatedGuard() {
           router.push("/");
       } 
         if(user && user.activated){
-          console.log('I am running because user is present and acivated')
+   
         dispatch(toggleLoader(true));
     
             router.push("/rooms");

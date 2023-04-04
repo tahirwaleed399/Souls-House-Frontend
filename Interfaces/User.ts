@@ -3,4 +3,11 @@ export interface User {
     activated : Boolean;
     id : String ;
     createdAt : Date;
+    profile : Image | null;
+    name : String;
+}
+
+type Image =  {
+     url : String;
+     public_id : String;
 }

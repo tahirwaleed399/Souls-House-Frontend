@@ -22,7 +22,7 @@ const Activate = () => {
   }
 
   return (
-    <div>
+    <div className="avtivate">
       <Step goNext={goNext} />
     </div>
   );

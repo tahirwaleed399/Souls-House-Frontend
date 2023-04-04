@@ -7,6 +7,8 @@ import Navigation from '../Components/Navigation/Navigation';
 import  { Toaster } from 'react-hot-toast';
 import { useRefreshTokensQuery } from '@/apis/authApi';
 import { useLoader } from '@/Hooks/useLoader';
+import "reactjs-popup/dist/index.css";
+import 'react-loading-skeleton/dist/skeleton.css'
 export default function App({ Component, pageProps }: AppProps) {
 
      
